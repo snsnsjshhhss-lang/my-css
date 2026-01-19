@@ -1,0 +1,102 @@
+.reviews-scroll{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    width:100%;
+}
+
+/* كارت التقييم */
+.review-card{
+    background:#ffffff;
+    border:1px solid #e7e7e7;
+    border-radius:8px;
+    padding:14px 16px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.04);
+    font-family:Arial,Helvetica,sans-serif;
+    position:relative;
+}
+
+/* الهيدر */
+.reviewer-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+/* الأفاتار */
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    color:#fff;
+    font-weight:bold;
+    font-size:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+/* الاسم والدولة */
+.reviewer-info div{
+    font-size:14px;
+    font-weight:bold;
+    color:#262626;
+}
+
+.reviewer-info span{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    font-size:12px;
+    color:#6b6b6b;
+}
+
+/* النجوم */
+.review-stars{
+    font-size:14px;
+    color:#febb02;
+    margin:6px 0 6px 52px;
+    letter-spacing:1px;
+}
+
+/* نص التقييم */
+.review-body{
+    font-size:14px;
+    color:#333;
+    line-height:1.6;
+    margin-left:52px;
+}
+
+/* فاصل */
+.review-card:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    bottom:-8px;
+    left:52px;
+    right:0;
+    height:1px;
+    background:#e7e7e7;
+}
+
+/* أول 3 تقييمات */
+.review-card:nth-child(-n+3){
+    background:#f9fbff;
+    border-color:#d6e4ff;
+}
+
+.review-card:nth-child(-n+3) .review-stars{
+    font-weight:bold;
+}
+
+.review-card:nth-child(-n+3)::before{
+    content:"تقييم موثوق";
+    position:absolute;
+    top:12px;
+    right:16px;
+    font-size:11px;
+    color:#003580;
+    background:#e9f0ff;
+    padding:2px 6px;
+    border-radius:4px;
+}
