@@ -1,0 +1,166 @@
+.action-btn{background:#0071c2 !important;color:#fff !important;}
+
+.discount-tag{
+    color: #ffffff !important;   /* النص أبيض */
+}
+
+    #footer #discountWhite{
+    color: #ffffff !important;
+}
+
+    .price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.price-info{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.current-price{
+    font-size:18px;
+    font-weight:700;
+    color:#262626;
+}
+
+.tax-info{
+    font-size:12px;
+    color:#6b6b6b;
+}
+
+/* زر Booking */
+.action-btn{
+    background:#0071c2;
+    color:#ffffff;
+    border:none;
+    border-radius:8px;
+    padding:12px 16px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:background-color .2s ease;
+}
+
+.action-btn:hover{
+    background:#005fa3;
+}
+
+.action-btn:active{
+    background:#004f87;
+}
+
+
+
+        body {
+            margin: 0;
+            padding: 0;
+            padding-top: 60px; /* مساحة فارغة عشان الهيدر مايغطيش المحتوى */
+            font-family: sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        /* تنسيق الهيدر ليظهر دائماً في الأعلى */
+        header {
+            position: fixed; /* أمر التثبيت */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            background-color: #003580; /* نفس الأزرق بتاع بوكينج */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            box-sizing: border-box;
+            z-index: 1000; /* عشان يفضل فوق أي حاجة تانية */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70%;
+        }
+
+        .header-icons span {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+
+
+        /* إجبار القائمة على الفتح من اليسار بنظام الـ Drawer */
+#occPopup {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 280px !important; /* عرض مناسب للموبايل */
+    height: 100vh !important;
+    background: white !important;
+    z-index: 2147483647 !important; /* أقصى قيمة ممكنة لضمان الظهور فوق كل شيء */
+    box-shadow: 5px 0 15px rgba(0,0,0,0.2) !important;
+    padding: 20px !important;
+    display: none; /* يتم التحكم به عبر JS */
+    flex-direction: column;
+    direction: rtl !important;
+}
+
+/* طبقة التعتيم الخلفية لضمان عدم الضغط على أي شيء آخر */
+#occPopupOverlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0,0,0,0.5) !important;
+    z-index: 2147483646 !important;
+    display: none;
+}
+        
+        
+    
+
+    html, body {
+    /* منع التكبير عند النقر السريع مرتين */
+    touch-action: pan-x pan-y;
+    
+    /* منع ارتداد الصفحة وتمددها */
+    overflow-x: hidden;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    
+    /* حماية إضافية ضد اللمس المتعدد */
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+
+
+
+                .header-icons {
+    display: flex;       /* يجعل العناصر بجانب بعضها */
+    align-items: center; /* يوازن العناصر عمودياً */
+    gap: 0px;           /* المسافة بين القلب وزر المشاركة */
+    padding: 0px;
+}
+
+/* لإضافة تأثير خفيف عند الضغط */
+.header-icons svg:active {
+    transform: scale(0.9);
+    opacity: 0.7;
+
+
+
+
+
+
