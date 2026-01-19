@@ -1,0 +1,13 @@
+#booking-splash{
+    position:fixed;
+    inset:0;
+    background:#003580;
+    z-index:999999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#booking-splash img{
+    width:190px;
+}
