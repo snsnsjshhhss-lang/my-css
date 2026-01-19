@@ -158,9 +158,652 @@
 .header-icons svg:active {
     transform: scale(0.9);
     opacity: 0.7;
+:root{
+  --b-yellow:#febb02;
+  --b-blue:#006ce4;
+  --b-light:#ebf3ff;
+  --b-dark:#1a1a1a;
+  --text-normal:400;
+  --text-medium:500;
+}
+* { box-sizing: border-box; margin:0; padding:0; }
+body{ font-family:"Segoe UI",Roboto,sans-serif; background:#f5f5f5; color:#222; font-weight:var(--text-normal); line-height:1.4; }
+
+.searchbox-layout{ background:var(--b-yellow); border-radius:8px; display:flex; flex-wrap:wrap; gap:8px; max-width:900px; margin:20px auto; padding:8px; }
+.searchbox-item{ background:#fff; flex:1 1 45%; display:flex; align-items:center; justify-content:space-between; padding:0 12px; cursor:pointer; position:relative; height:50px; border-radius:6px; }
+.searchbox-item span{ font-size:14px; font-weight:var(--text-normal); color:var(--b-dark); }
+.btn-blue{ background:var(--b-blue); color:#fff; border:none; border-radius:8px; padding:12px 16px; font-weight:var(--text-medium); cursor:pointer; flex:1 1 100%; display:flex; justify-content:space-between; align-items:center; }
+
+.occupancy-popup{ position:absolute; top:55px; right:0; background:#fff; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,.12); padding:14px; width:260px; display:none; z-index:9999; }
+.occ-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.occ-controls{ display:flex; align-items:center; gap:10px; border:1px solid #e0e0e0; padding:4px 8px; border-radius:6px; }
+.occ-btn{ background:none; border:none; font-size:20px; color:var(--b-blue); cursor:pointer; font-weight:var(--text-medium); width:28px; }
+
+#calendar-overlay{ position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; display:none; flex-direction:column; z-index:10000; }
+.months-nav{ display:flex; overflow-x:auto; gap:6px; padding:10px; border-bottom:1px solid #f0f0f0; }
+.month-tab{ padding:8px 12px; font-size:13px; color:#666; cursor:pointer; border-radius:6px; font-weight:var(--text-normal); white-space:nowrap; }
+.month-tab.active{ color:var(--b-blue); font-weight:var(--text-medium); border-bottom:2px solid var(--b-blue); }
+
+.cal-header{ display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-bottom:1px solid #eee; }
+.cal-nav-btn{ font-size:20px; cursor:pointer; color:var(--b-dark); }
+
+.d-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-top:8px; }
+.d-item{ height:44px; display:flex; align-items:center; justify-content:center; font-size:14px; cursor:pointer; border-radius:8px; font-weight:var(--text-normal); background:transparent; }
+.d-item.disabled{ background:#f2f2f2; color:#bdbdbd; cursor:not-allowed; pointer-events:none; }
+.d-item.range-start, .d-item.range-end{ background:var(--b-blue); color:#fff; font-weight:var(--text-medium); }
+.d-item.in-between{ background:var(--b-light); color:var(--b-blue); font-weight:var(--text-normal); }
+
+#summaryText{ padding:10px 0; font-size:14px; color:#333; font-weight:var(--text-normal); word-break:break-word; }
+.availability-alert, .res-table{ max-width:900px; margin:10px auto; background:#fff; padding:12px; border-radius:8px; display:none; word-break:break-word; }
+.sticky-footer{ position:fixed; bottom:0; left:0; right:0; background:#fff; box-shadow:0 -4px 18px rgba(0,0,0,.06); padding:12px 18px; display:none; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+.sticky-footer div{ font-size:14px; color:#555; }
+.sticky-footer b{ font-weight:var(--text-medium); color:#222; }
+
+    /* إعدادات عامة للخطوط والألوان */
+    :root {
+        --booking-blue: #003580;
+        --booking-light-blue: #ebf3ff;
+        --btn-blue: #0071c2;
+        --btn-hover: #005999;
+        --text-dark: #262626;
+        --text-gray: #6b6b6b;
+        --bg-gray: #f2f2f2;
+        --green-badge: #008009;
+    }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+        background-color: var(--bg-gray);
+        color: var(--text-dark);
+        padding-bottom: 80px; /* مساحة للفوتر الثابت */
+    }
+
+    /* 1. الهيدر العلوي */
+    header {
+        background-color: var(--booking-blue);
+        color: white;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    .header-title {
+        font-size: 16px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+    }
+    .header-icons span {
+        font-size: 20px;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+
+    /* 2. معرض الصور ← الجزء المعدل هنا */
+    .image-gallery {
+        position: relative;
+        background: #ddd;
+        height: 240px;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        cursor: grab;
+        user-select: none;
+        scroll-behavior: smooth;
+    }
+
+    /* إخفاء شريط التمرير في كل المتصفحات */
+    .image-gallery {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .image-gallery::-webkit-scrollbar {
+        display: none;
+    }
+
+    .img-slide {
+        min-width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+        position: relative;
+    }
+    .img-1 { background-image: url('https://cf.bstatic.com/xdata/imagges/hotel/max1024x768/489069123.webp?k=a410317374005374828104595856755452445173003020665518206410214611&o=&hp=1'); }
+    .img-2 { background-image: url('https://cf.bstatic.com/xdata/imagges/hotel/max1024x768/489069129.webp?k=2910246200251786199320251786522452033020665518206410214611&o=&hp=1'); }
+
+    .gallery-badge {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.6);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+
+    /* باقي الستايل بدون تغيير */
+    .hotel-info {
+        background: white;
+        padding: 16px;
+        margin-bottom: 8px;
+    }
+    .hotel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .hotel-name {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 1.3;
+        width: 80%;
+    }
+    .rating-box {
+        background-color: var(--booking-blue);
+        color: white;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px 6px 6px 0;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .stars {
+        color: #febb02;
+        font-size: 12px;
+        margin: 4px 0;
+    }
+    .location {
+        font-size: 14px;
+        color: var(--btn-blue);
+        margin-bottom: 8px;
+    }
+    .tags {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+    }
+    .tag {
+        background-color: var(--booking-light-blue);
+        color: var(--booking-blue);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .reviews-section {
+        background: white;
+        padding: 16px;
+        margin-top: 10px;
+        border-top: 1px solid #e7e7e7;
+    }
+    .review-score-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .score-big {
+        background: var(--booking-blue);
+        color: white;
+        padding: 6px 8px;
+        border-radius: 6px 6px 6px 0;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+    .score-text strong { display: block; font-size: 16px; }
+    .score-text span { color: var(--text-gray); font-size: 12px; }
+
+    .reviews-scroll {
+        display: flex;
+        overflow-x: auto;
+        gap: 12px;
+        padding-bottom: 10px;
+        scrollbar-width: none;
+    }
+    .reviews-scroll::-webkit-scrollbar { display: none; }
+
+    .review-card {
+        min-width: 280px;
+        border: 1px solid #e7e7e7;
+        border-radius: 8px;
+        padding: 12px;
+        background: white;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    .reviewer-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #555;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        margin-left: 8px;
+    }
+    .reviewer-info div { font-weight: bold; font-size: 13px; }
+    .reviewer-info span { font-size: 11px; color: var(--text-gray); }
+    .review-body {
+        color: var(--text-dark);
+    }
+
+    .map-section {
+        margin: 10px 0;
+        padding: 16px;
+        background: white;
+    }
+    .map-img {
+        width: 100%;
+        height: 100px;
+        background-color: #e8f0fe;
+        background-image: url('https://maps.googleapis.com/maps/api/staticmap?center=29.9792,31.1342&zoom=14&size=600x150&scale=2&markers=color:blue%7C29.9792,31.1342&key=YOUR_API_KEY');
+        background-size: cover;
+        border-radius: 8px;
+        position: relative;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .map-marker {
+        font-size: 24px;
+        color: var(--btn-blue);
+    }
+
+    .sticky-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 1px solid #ccc;
+        padding: 10px 16px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    .discount-tag {
+        background-color: #008009;
+        color: white;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        align-self: flex-start;
+        margin-bottom: 4px;
+    }
+    .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .price-info {
+        display: flex;
+        flex-direction: column;
+    }
+    .old-price {
+        text-decoration: line-through;
+        color: #cc0000;
+        font-size: 12px;
+    }
+    .current-price {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--text-dark);
+    }
+    .tax-info {
+        font-size: 11px;
+        color: var(--text-gray);
+    }
+    .action-btn {
+        background-color: var(--btn-blue);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 8px;
+        text-align: center;
+    }
+    .action-btn:hover {
+        background-color: var(--btn-hover);
+    }
+
+    .icon { font-family: sans-serif; }
+    .separator {
+        height: 1px;
+        background: #e7e7e7;
+        margin: 16px 0;
+    }
+                
+                .header-icons {
+    display: flex;       /* يجعل العناصر بجانب بعضها */
+    align-items: center; /* يوازن العناصر عمودياً */
+    gap: 0px;           /* المسافة بين القلب وزر المشاركة */
+    padding: 0px;
+}
+
+/* لإضافة تأثير خفيف عند الضغط */
+.header-icons svg:active {
+    transform: scale(0.9);
+    opacity: 0.7;
+}
+
+
+.booking-map{
+    direction: rtl;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI",
+                 Roboto, Helvetica, Arial, sans-serif;
+    padding: 0 16px; /* نفس padding الصفحة */
+}
+
+/* عنوان القسم */
+.booking-map h3{
+    font-size: 21px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 24px 0 12px;
+}
+
+/* الخريطة نفسها */
+.map-image{
+    width: 100%;
+    height: 150px;              /* ← ده الرقم الحقيقي */
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e6e6e6;
+    background: #f5f5f5;
+}
+
+/* صورة الخريطة */
+.map-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* النص أسفل الخريطة */
+.map-address{
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.45;
+}
+
+/* السطر التاني */
+.map-address span{
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #6b6b6b;
+}
+    
+    body {
+    font-family: Arial, sans-serif;
+    direction: rtl;
+}
+
+.reviews-section {
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    background: #fff;
+    max-width: 400px;
+}
+
+.review-score-row {
+    display: flex;
+    align-items: center;
+}
+
+.score-big {
+    background: #003580;
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.score-text {
+    flex: 1;
+    margin-right: 12px;
+}
+
+.score-text span {
+    color: #6b6b6b;
+    font-size: 13px;
+}
+
+.arrow {
+    font-size: 22px;
+    color: #6b6b6b;
+    margin-right: 8px;
+    transform: rotate(180deg);
+}
+
+.reviews-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.close {
+    float: left;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.rating-item {
+    margin-bottom: 18px;
+}
+
+.rating-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.rating-title {
+    font-weight: 600;
+}
+
+.rating-value small {
+    color: #008009;
+    font-size: 12px;
+}
+
+.bar.green {
+    height: 8px;
+    width: 100%;
+    background: #008009;
+    border-radius: 4px;
+}
+
+
+    .reviews-scroll {
+    display: flex;
+    flex-direction: column;   /* تحت بعض */
+    gap: 16px;
+    width: 100%;
+}
+
+/* كارت التقييم */
+.review-card {
+    background: #ffffff;
+    border: 1px solid #e7e7e7;
+    border-radius: 8px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* الهيدر (الصورة + الاسم) */
+.reviewer-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* الحرف الدائري */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* اسم الشخص + الدولة */
+.reviewer-info div {
+    font-size: 14px;
+    font-weight: bold;
+    color: #262626;
+}
+
+.reviewer-info span {
+    font-size: 12px;
+    color: #6b6b6b;
+}
+
+/* النجوم – Booking حرفياً */
+.review-stars {
+    font-size: 14px;
+    color: #febb02; /* لون Booking */
+    margin: 6px 0 6px 52px; /* نفس محاذاة النص */
+    letter-spacing: 1px;
+}
+
+/* نص التقييم */
+.review-body {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin-left: 52px; /* تحت الاسم */
+}
+
+    .review-card {
+    position: relative;
+}
+
+.review-card:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 52px;        /* يبدأ من تحت الاسم */
+    right: 0;
+    height: 1px;
+    background: #e7e7e7; /* لون فاصل Booking */
+}
+
+.review-card:nth-child(-n+3) {
+    background: #f9fbff; /* خلفية خفيفة جداً */
+    border-color: #d6e4ff;
+}
+
+.review-card:nth-child(-n+3) .review-stars {
+    font-weight: bold;
+}
+
+
+.review-card:nth-child(-n+3)::before {
+    content: "تقييم موثوق";
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 11px;
+    color: #003580;
+    background: #e9f0ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.reviewer-info span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;                 /* مسافة Booking */
+    font-size: 12px;
+    color: #6b6b6b;
+}
+
+/* تصغير العلم */
+.reviewer-info span::first-letter {
+    font-size: 14px;          /* حجم علم Booking */
+}
 
 
 
 
-
-
+        
+        /* منع تحديد النصوص في الصفحة كاملة */
+body {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none;     /* IE 10+ */
+    user-select: none;         /* Standard syntax */
+    
+    /* منع ظهور القائمة الشفافة عند الضغط المطول في الأيفون */
+    -webkit-touch-callout: none; 
+}
+        
+            
