@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
 
     document.addEventListener('touchstart', function (e) {
         if (e.touches.length > 1) {
@@ -15,4 +15,4 @@ document.addEventListener("DOMContentLoaded", function () {
         lastTouchEnd = now;
     }, false);
 
-});
+})();
