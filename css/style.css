@@ -159,26 +159,3 @@
     transform: scale(0.9);
     opacity: 0.7;
 
-
-
-
-
-
-    :root{
-  --b-yellow:#febb02;
-  --b-blue:#006ce4;
-  --b-light:#ebf3ff;
-  --b-dark:#1a1a1a;
-  --text-normal:400;
-  --text-medium:500;
-}
-* { box-sizing: border-box; margin:0; padding:0; }
-body{ font-family:"Segoe UI",Roboto,sans-serif; background:#f5f5f5; color:#222; font-weight:var(--text-normal); line-height:1.4; }
-
-/* باقي الكود زي ما هو */
-
-
-
-
-
-
