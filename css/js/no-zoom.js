@@ -1,16 +1,20 @@
-// منع التكبير عبر اللمس المتعدد (Pinch Zoom)
-document.addEventListener('touchstart', function (event) {
-    if (event.touches.length > 1) {
-        event.preventDefault();
-    }
-}, { passive: false });
+(function () {
 
-// منع التكبير عند النقر المزدوج
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function (event) {
-    let now = new Date().getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
+    // منع التكبير بالـ Pinch
+    document.addEventListener('touchstart', function (e) {
+        if (e.touches.length > 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // منع التكبير بالـ Double Tap
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (e) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+            e.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+
+})();
